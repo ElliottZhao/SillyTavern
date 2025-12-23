@@ -22,10 +22,6 @@ services:
     maxShutdownDelaySeconds: 30 # Default shutdown delay
     healthCheckPath: / # Basic health check endpoint
 
-    # Node.js version requirement
-    engines:
-      node: '>= 18'
-
     # Environment variables
     envVars:
       - key: NODE_ENV
