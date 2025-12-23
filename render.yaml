@@ -1,0 +1,42 @@
+#################################################################
+# SillyTavern Render Blueprint                                  #
+# This configuration file defines how SillyTavern is deployed   #
+# on Render.com.                                                #
+#################################################################
+
+previews:
+  generation: automatic # Enable preview environments for pull requests
+
+services:
+  # Web service for SillyTavern
+  - type: web
+    runtime: node
+    name: sillytavern
+    region: oregon # Choose the region closest to your users
+    plan: starter # Starter plan is sufficient for most use cases
+    branch: render-deploy # Default branch to deploy from
+    buildCommand: npm install
+    preDeployCommand: npm run postinstall
+    startCommand: npm start
+    autoDeployTrigger: 'push' # Automatically deploy on push to the configured branch
+    maxShutdownDelaySeconds: 30 # Default shutdown delay
+    healthCheckPath: / # Basic health check endpoint
+
+    # Node.js version requirement
+    engines:
+      node: '>= 18'
+
+    # Environment variables
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000 # Render expects applications to listen on port 3000
+      - key: DATA_ROOT
+        value: ./data # Default data directory
+
+    # Disk configuration for persistent storage
+    disk:
+      name: sillytavern-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1 # Adjust size based on your needs
