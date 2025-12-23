@@ -18,7 +18,7 @@ services:
     buildCommand: npm install
     preDeployCommand: npm run postinstall
     startCommand: npm start
-    autoDeployTrigger: push # Automatically deploy on push to the configured branch
+    autoDeployTrigger: commit # Automatically deploy on push to the configured branch
     healthCheckPath: / # Basic health check endpoint
 
     # Environment variables
